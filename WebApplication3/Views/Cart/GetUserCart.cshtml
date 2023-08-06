@@ -1,0 +1,53 @@
+﻿@model List<WebApplication3.ModelForView.ShoppingCartInfo>
+
+<div style="width:80% ;margin:auto">
+    @if (Model != null && Model.Count>0)
+    {
+        <h1><b>My Cart</b></h1>
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>Book</th>
+                <th>Image</th>
+                <th>Genre</th>
+                <th>Unit Price</th>
+                <th>Total Price</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Booking.BookName</td>
+                    <td>
+                        @item.Booking.BookImage
+
+                    </td>
+
+                    <td>@item.Booking.Gener.GenerName</td>
+                    <td>@item.Booking.Price X  @item.CartDetail.Qunitity </td>
+                    <td>@(item.Booking.Price * @item.CartDetail.Qunitity)</td>
+                    <td>
+                        <a class="btn btn-info" href="/Cart/Addcart?bookid=@item.Booking.Id&&UserId=1&&redirect=1">+</a>
+                        <a class="btn btn-info" href="/Cart/Removecart?bookid=@item.Booking.Id&&UserId=1">-</a>
+                    </td>
+
+                </tr>
+            }
+        </table>
+        <div class="my-2">
+            <h5>
+                Total(INR): <strong style="display: inline;">
+                    @Model.Sum(item => item.Booking.Price * item.CartDetail.Qunitity)
+                </strong>
+            </h5>
+        </div>
+
+        <div class="my-2">
+            <a class="btn btn-primary" href="/Cart/DoCheckOut"><b>checkOut</b> </a>
+
+        </div>
+    }
+    else
+    {
+        <h5>No item Found</h5>
+    }
+</div>
